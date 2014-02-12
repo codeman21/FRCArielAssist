@@ -39,12 +39,6 @@ public class DriveComponent implements RobotComponent {
         rrjag = jag5;
         accel = new ADXL345_I2C(1, ADXL345_I2C.DataFormat_Range.k2G);
     }
-    public void initialize() {
-        
-        
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
 
     public void autonomousPeriodic() {
     }
