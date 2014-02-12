@@ -7,7 +7,6 @@ package edu.wpi.first.wpilibj.templates;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.NIVisionException;
@@ -19,11 +18,11 @@ import edu.wpi.first.wpilibj.image.ColorImage;
 public class CameraComponent implements RobotComponent {
         
     AxisCamera camera; //Camera
-    private int imageWidth = 0;//width of image
+    private int imageWidth;//width of image
     DriverStation dS = DriverStation.getInstance();
     ColorImage image;
         
-    public void robotInit() {
+    public void initialize() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
         camera = AxisCamera.getInstance("192.168.0.90");
@@ -31,6 +30,13 @@ public class CameraComponent implements RobotComponent {
         camera.writeResolution(AxisCamera.ResolutionT.k160x120);
         camera.writeCompression(20);
         camera.writeBrightness(0);
+        try {
+            camera.getImage();
+        } catch (AxisCameraException ex) {
+            ex.printStackTrace();
+        } catch (NIVisionException ex) {
+            ex.printStackTrace();
+        }
         System.out.println("Camera Activated");
     }
 
@@ -78,6 +84,5 @@ public class CameraComponent implements RobotComponent {
     public void teleopInit() {
         
     }
-
 
 }
